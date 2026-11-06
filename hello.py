@@ -13,3 +13,4 @@ with open('test_data.csv', mode='r', encoding='utf-8-sig') as file:
         
         # 3. 打印出要求的中文格式
         print(f"检查用户 {username} 的预期状态是 {status}")
+        
