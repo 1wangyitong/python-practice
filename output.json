@@ -1,0 +1,17 @@
+[
+    {
+        "id": "1",
+        "username": "admin",
+        "expected_status": "200"
+    },
+    {
+        "id": "2",
+        "username": "test_user",
+        "expected_status": "200"
+    },
+    {
+        "id": "3",
+        "username": "guest",
+        "expected_status": "403"
+    }
+]

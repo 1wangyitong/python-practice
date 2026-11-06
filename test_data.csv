@@ -1,0 +1,4 @@
+id,username,expected_status
+1,admin,200
+2,test_user,200
+3,guest,403
