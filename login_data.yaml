@@ -1,0 +1,12 @@
+- 
+  username: "admin"
+  password: "123456a"
+  expected_msg: "登录成功"
+- 
+  username: "admin"
+  password: "123"
+  expected_msg: "密码长度不能少于6位"
+- 
+  username: "admin"
+  password: "12345!"
+  expected_msg: "密码必须包含字母和数字"
