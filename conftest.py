@@ -6,7 +6,7 @@ import pytest
 # def base_url():
 #     return "https://jsonplaceholder.typicode.com"
 
-from api_client import WeatherAPI
+from api.api_client import WeatherAPI
 
 # 这个 fixture 用来提供 WeatherAPI 实例
 @pytest.fixture(scope = "session")
