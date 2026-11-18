@@ -1,15 +1,31 @@
 import requests
 
-class WeatherAPI:
+class ApiClient:
     def __init__(self):
-        # 1.初始化一个 Session 对象(相当于打开一个浏览器,保持 Cookie)
-        self.session = requests.session()
-        # 2.统一设置基础 URL ,以后换个环境(比如从测试环境到生产环境)只需要改这里
-        self.base_url = "http://t.weather.itboy.net/api/weather/city"
-
-    def get_weather(self,city_code):
-        # 3.封装具体的请求方法
-        url = f"{self.base_url}/{city_code}"
-        response = self.session.get(url)
+        self.session = requests.Session()
+        self.base_url = "https://httpbin.org"
+        
+        # 🚀 新增：配置代理，让 requests 像浏览器一样通过梯子出国
+        self.proxies = {
+            "http": "http://127.0.0.1:7897",
+            "https": "http://127.0.0.1:7897",
+        }
+    def get_weather(self, city_code):
+        url = f"http://t.weather.itboy.net/api/weather/city/{city_code}"
+        response = self.session.get(url, timeout=5)
         return response.json()
-    
+
+    def login(self, username, password):
+        url = f"{self.base_url}/basic-auth/{username}/{password}"
+        # 这里加上 proxies=self.proxies
+        response = self.session.get(url, auth=(username, password), proxies=self.proxies)
+        if response.status_code == 200:
+            return "fake_token_123456"
+        return None
+
+    def get_user_info(self, token):
+        url = f"{self.base_url}/headers"
+        headers = {"Authorization": f"Bearer {token}"}
+        # 这里也加上 proxies=self.proxies
+        response = self.session.get(url, headers=headers, proxies=self.proxies)
+        return response.json()

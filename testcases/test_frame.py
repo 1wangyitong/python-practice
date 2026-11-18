@@ -20,7 +20,7 @@ test_data = get_yaml_data("data/weather_data.yaml")
 
 @allure.feature("天气服务模块")  # 第一层：大模块
 @pytest.mark.parametrize("case", test_data)
-def test_weather_with_frame(weather_api, case):
+def test_weather_with_frame(api_client, case):
     city_code = case["city_code"]
     expected_city = case["expected_city"]
     
@@ -29,7 +29,7 @@ def test_weather_with_frame(weather_api, case):
     allure.dynamic.title(f"测试城市代码: {city_code}")
     
     # 发送请求（黄色波浪线是编辑器的提示，不用管，能跑就行）
-    data = weather_api.get_weather(city_code)
+    data = api_client.get_weather(city_code)
     city_name = data["cityInfo"]["city"]
     
     # 💡 附加请求参数和响应数据到报告里
