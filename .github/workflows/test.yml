@@ -1,31 +1,47 @@
-name: 自动化测试流水线
+name: 自动化测试与报告部署
 
 on:
   push:
-    branches: [ "main" ] # 只要你向 main 分支推送代码，就触发
+    branches: [ "main" ]
+
+permissions:
+  contents: write # 允许机器人推送网页分支
 
 jobs:
   test:
-    runs-on: ubuntu-latest # 云端免费提供一台 Ubuntu Linux 服务器
-
+    runs-on: ubuntu-latest
     steps:
-    - name: 1. 拉取你的代码
+    - name: 1. 拉取代码
       uses: actions/checkout@v3
 
-    - name: 2. 安装 Python 环境
+    - name: 2. 安装 Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.10'
 
-    - name: 3. 安装项目依赖
+    - name: 3. 安装依赖
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: 4. 运行 Pytest 测试
+    - name: 4. 运行测试生成 Allure 数据
       run: |
-        python -m pytest testcases/
+        pytest --alluredir=./allure-results
+      continue-on-error: true # 就算测试挂了，也继续往下走去发报告
 
-# 这段代码的意思是，让云端机器人在你的代码被推送到 GitHub 时，自动下载代码、安装 Python、安装 requirements.txt 里的所有库，然后自动跑一遍 testcases/ 文件夹里的测试用例。
+    - name: 5. 安装 Allure 命令行工具
+      run: |
+        sudo apt-get install -y default-jre
+        wget https://github.com/allure-framework/allure2/releases/download/2.24.0/allure-2.24.0.tgz
+        tar -zxvf allure-2.24.0.tgz -C /opt/
+        sudo ln -s /opt/allure-2.24.0/bin/allure /usr/bin/allure
 
-        
+    - name: 6. 生成 HTML 网页报告
+      run: |
+        allure generate ./allure-results -o ./allure-report --clean
+
+    - name: 7. 将报告发布到 GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./allure-report

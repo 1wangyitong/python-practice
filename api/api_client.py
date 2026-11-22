@@ -1,9 +1,9 @@
 import requests
-
+from config import EnvConfig
 class ApiClient:
     def __init__(self):
         self.session = requests.Session()
-        self.base_url = "https://httpbin.org"
+        self.base_url = EnvConfig.BASE_URL
         
         # 🚀 新增：配置代理，让 requests 像浏览器一样通过梯子出国
         self.proxies = {
