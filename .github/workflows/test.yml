@@ -31,10 +31,7 @@ jobs:
 
     - name: 5. 安装 Allure 命令行工具
       run: |
-        sudo apt-get install -y default-jre
-        wget https://github.com/allure-framework/allure2/releases/download/2.24.0/allure-2.24.0.tgz
-        tar -zxvf allure-2.24.0.tgz -C /opt/
-        sudo ln -s /opt/allure-2.24.0/bin/allure /usr/bin/allure
+        npm install -g allure-commandline
 
     - name: 6. 生成 HTML 网页报告
       run: |
