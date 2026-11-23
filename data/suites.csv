@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","1810","test_weather_with_frame[case0]","","2026-11-13","passed","2026-11-13","","test_frame","",""
+"","223","测试城市代码: 101010100","testcases","2026-11-16","passed","2026-11-16","","test_frame","",""
+"","401","test_weather_with_frame[case1]","","2026-11-13","passed","2026-11-13","","test_frame","",""
+"","97","测试城市代码: 101020100","testcases","2026-11-16","passed","2026-11-16","","test_frame","",""
