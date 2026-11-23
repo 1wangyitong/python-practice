@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
 
 permissions:
-  contents: write # 允许机器人推送网页分支
+  contents: write
 
 jobs:
   test:
@@ -24,20 +24,20 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: 4. 运行测试生成 Allure 数据
+    - name: 4. 运行测试
       run: |
         pytest --alluredir=./allure-results
-      continue-on-error: true # 就算测试挂了，也继续往下走去发报告
+      continue-on-error: true
 
-    - name: 5. 安装 Allure 命令行工具
+    - name: 5. 安装 Allure 工具
       run: |
         npm install -g allure-commandline
 
-    - name: 6. 生成 HTML 网页报告
+    - name: 6. 生成网页报告
       run: |
         allure generate ./allure-results -o ./allure-report --clean
 
-    - name: 7. 将报告发布到 GitHub Pages
+    - name: 7. 发布到 GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
