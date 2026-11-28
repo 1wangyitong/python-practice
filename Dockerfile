@@ -1,7 +1,7 @@
 # 基础镜像：使用官方轻量级 Python 3.10
 FROM python:3.10-slim
 
-# 设置容器内的工作目录为 /app
+# 设置容器内的工作目录
 WORKDIR /app
 
 # 拷贝依赖清单
